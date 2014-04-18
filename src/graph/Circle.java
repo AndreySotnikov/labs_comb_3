@@ -18,13 +18,13 @@ import java.util.ArrayList;
 public class Circle {
     public static final int rad = 60;
     public Point pnt;
-    public ArrayList<Integer> roads;
+    //public ArrayList<Integer> roads;
     
     Circle (Point pnt){
         this.pnt = new Point();
         this.pnt.x = pnt.x - rad/2;
         this.pnt.y = pnt.y - rad/4;
-        this.roads = new ArrayList();
+        //this.roads = new ArrayList();
         //this.pnt = pnt;
     }
     @Override

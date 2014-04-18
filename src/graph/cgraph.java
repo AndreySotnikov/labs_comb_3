@@ -32,6 +32,7 @@ import java.util.Random;
 
 public class cgraph {
     private Graphics g;
+    private Graphics g1;
     //private ArrayList<Point> points;
     private ArrayList<Circle> points;
     private ArrayList<Line> lines;
@@ -52,14 +53,34 @@ public class cgraph {
     public static final double mutationchomosome = 0.5;
     public static final double mutationgen = 0.5;
     public static int maxcolor = 8;
+    private int[][] m;
+    private int count;
+    private Circle[] pnts;
+    Color backgr;
     //public Solve BestSolve;
     //private HashSet<Integer> ws;
     
-    public cgraph(Graphics g){
+    public cgraph(Graphics g,Graphics g1, Color clr){
         this.g = g;
+        this.g1 = g1;
+        count =0;
         points = new ArrayList();
         lines = new ArrayList();
-        //matr = new ArrayList<ArrayList<Integer>>();
+        m = new int[100][100];
+        pnts = new Circle[100];
+        backgr = clr;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public int[][] getM() {
+        return m;
+    }
+
+    public Circle[] getPnts() {
+        return pnts;
     }
 
     public ArrayList<Circle> getPoints() {
@@ -70,66 +91,107 @@ public class cgraph {
         return matr;
     }
                  
-    
-    public void addnode(Point pnt,Color clr){
+    public void addnode(Point pnt){
         Circle c = new Circle(pnt);
-        //int k = points.indexOf(c);
-        /*if (k!=-1){
-            Circle del = points.get(k);
-                g.clearRect(points.get(k).pnt.x,points.get(k).pnt.y,points.get(k).rad,points.get(k).rad);
-                for (int j=0;j<lines.size();j++){
-                    Line ln = lines.get(j);
-                    Circle tmp1 = new Circle(ln.p1);
-                    Circle tmp2 = new Circle(ln.p2);
-                    if (del.equals(tmp1) || del.equals(tmp2)){
-                        g.setColor(clr);
-                        g.drawLine(ln.p1.x, ln.p1.y, ln.p2.x, ln.p2.y);
-                        //g.drawLine(tmp1.pnt.x+Circle.rad/2, tmp1.pnt.y+Circle.rad/2, tmp2.pnt.x+Circle.rad/2, tmp2.pnt.y+Circle.rad/2);
-                        g.setColor(Color.black);
-                        lines.remove(j);
-                    }
+        if (deleteNode(pnt)==-1){
+            boolean result = false;
+            for (int i=0;i<count && result;i++)
+                if (pnts[i]==null){
+                    pnts[i] = c;
+                    result =true;
                 }
-                points.remove(del); 
+            if (!result)
+                pnts[count] = c;
+            count ++;
         }
-        else{*/
-            points.add(c);
-            //c.print(g);
-        //}
-        for (Circle p : points){
-            p.print(g);
-        }
-     /*   boolean OK = true;
-        for(int i =0;i<points.size();i++){
-            Point p = points.get(i);
-            if ((int)p.getX()-15<(int)pnt.getX()+15 && (int)p.getX()-15>(int)pnt.getX()-45 && 
-                    (int)p.getY()-15<(int)pnt.getY() && (int)p.getY()+15>(int)pnt.getY()){
-                g.clearRect((int)p.getX()-15, (int)p.getY(), 31, 31);
-                points.remove(p);
-                OK = false;
-                for (int j = 0; j < lines.size(); j++){
-                    Line ln = lines.get(j);
-                    if ((int)p.getX()-15<(int)ln.p1.getX()+15 && (int)ln.p1.getX()-15>(int)ln.p1.getX()-45 && 
-                        (int)p.getY()-15<(int)ln.p1.getY() && (int)p.getY()+15>(int)ln.p1.getY() || 
-                        (int)p.getX()-15<(int)ln.p2.getX()+15 && (int)ln.p2.getX()-15>(int)ln.p2.getX()-45 && 
-                        (int)p.getY()-30<(int)ln.p2.getY() && (int)p.getY()+30>(int)ln.p2.getY()){
-                        lines.remove(j);
-                        g.setColor(Color.white);
-                        g.drawLine((int)ln.p1.getX(), (int)ln.p1.getY(), (int)ln.p2.getX(), (int)ln.p2.getY());
-                        g.setColor(Color.black);
-                    }
-                }
+        for (Circle pnt1 : pnts) {
+            if (pnt1 != null) {
+                pnt1.print(g);
+                pnt1.print(g1);
             }
         }
-        if (OK){
-            points.add(pnt);
-            //g.drawOval((int)pnt.getX()-15, (int)pnt.getY(), 30, 30);
-            g.fillOval((int)pnt.getX()-15, (int)pnt.getY(), 30, 30);
+    }
+
+    public int deleteNode(Point pnt) {
+        Circle c = new Circle(pnt);
+        int k = -1;
+        for (int i = 0; i < pnts.length; i++) {
+            if (c.equals(pnts[i])) {
+                k = i;
+            }
         }
-        //matr.add(new ArrayList());*/
-        
+        if (k != -1) {
+            g.clearRect(pnts[k].pnt.x, pnts[k].pnt.y, pnts[k].rad, pnts[k].rad);
+            g1.clearRect(pnts[k].pnt.x, pnts[k].pnt.y, pnts[k].rad, pnts[k].rad);
+            for (int i = 0; i < 100; i++) {
+                if (m[i][k] == 1) {
+                    removeRoad(i, k);
+                }
+
+            }
+            pnts[k] = null;
+        }
+        for (Circle pnt1 : pnts) {
+            if (pnt1 != null) {
+                pnt1.print(g);
+                pnt1.print(g1);
+            }
+        }
+        return k;
     }
     
-    public void addline(Point p1, Point p2){
+    public void deleteRoad(Point p1,Point p2){
+        Circle tmp1 = new Circle(p1);
+        Circle tmp2 = new Circle(p2);
+        int r1=-2,r2=-2;
+        for (int i=0;i<pnts.length;i++)
+            if (tmp1.equals(pnts[i]))
+                r1 = i;
+        for (int i=0;i<pnts.length;i++)
+            if (tmp2.equals(pnts[i]))
+                r2 = i; 
+        if (r1!=-2 && r2!=-2)
+            removeRoad(r1,r2);
+        for (Circle pnt1 : pnts) {
+            if (pnt1 != null) {
+                pnt1.print(g);
+                pnt1.print(g1);
+            }
+        }        
+    }
+    
+    private void removeRoad(int r1, int r2){
+        m[r1][r2] = -1;
+        m[r2][r1] = -1;
+        g.setColor(backgr);
+        g1.setColor(backgr);
+        Circle tmp1 = pnts[r1];
+        Circle tmp2 = pnts[r2];       
+        g.drawLine(tmp1.pnt.x+Circle.rad/2, tmp1.pnt.y+Circle.rad/2, tmp2.pnt.x+Circle.rad/2, tmp2.pnt.y+Circle.rad/2);
+        g1.drawLine(tmp1.pnt.x+Circle.rad/2, tmp1.pnt.y+Circle.rad/2, tmp2.pnt.x+Circle.rad/2, tmp2.pnt.y+Circle.rad/2);
+        g.setColor(Color.black);
+        g1.setColor(Color.black);
+    }
+    
+    public void addline(Point p1,Point p2){
+        int f1=-2,f2=-2;
+        Circle tmp1 = new Circle(p1);
+        Circle tmp2 = new Circle(p2);
+        for (int i=0;i<pnts.length;i++)
+            if (tmp1.equals(pnts[i]))
+                f1=i;
+        for (int i=0;i<pnts.length;i++)
+            if (tmp2.equals(pnts[i]))
+                f2=i;        
+        if (f1>-1 && f2>-1 && f1!=f2){
+            m[f1][f2] = 1;
+            m[f2][f1] = 1;
+            g.drawLine(pnts[f1].pnt.x+Circle.rad/2, pnts[f1].pnt.y+Circle.rad/2, pnts[f2].pnt.x+Circle.rad/2, pnts[f2].pnt.y+Circle.rad/2);
+            g1.drawLine(pnts[f1].pnt.x+Circle.rad/2, pnts[f1].pnt.y+Circle.rad/2, pnts[f2].pnt.x+Circle.rad/2, pnts[f2].pnt.y+Circle.rad/2);
+        }
+    }
+    
+    /*public void addline(Point p1, Point p2){
         int f1,f2;
         Circle tmp1 = new Circle(p1);
         Circle tmp2 = new Circle(p2);
@@ -141,30 +203,7 @@ public class cgraph {
             g.drawLine(points.get(f1).pnt.x+Circle.rad/2, points.get(f1).pnt.y+Circle.rad/2, points.get(f2).pnt.x+Circle.rad/2, points.get(f2).pnt.y+Circle.rad/2);
             lines.add(new Line(new Point(points.get(f1).pnt.x+Circle.rad/2,points.get(f1).pnt.y+Circle.rad/2),new Point(points.get(f2).pnt.x+Circle.rad/2,points.get(f2).pnt.y+Circle.rad/2)));
         }
-        /*boolean find1=false,find2=false;
-        int k = 0,m = 0;
-        for(int i =0;i<points.size();i++){
-            Point p = points.get(i);
-            if ((int)p.getX()-15<(int)p1.getX()+15 && (int)p.getX()-15>(int)p1.getX()-45 && 
-                    (int)p.getY()-15<(int)p1.getY() && (int)p.getY()+15>(int)p1.getY()){
-                find1=true;
-                k=i;
-            }
-        }
-        for(int i =0;i<points.size();i++){
-            Point p = points.get(i);
-            if ((int)p.getX()-15<(int)p2.getX()+15 && (int)p.getX()-15>(int)p2.getX()-45 && 
-                    (int)p.getY()-15<(int)p2.getY() && (int)p.getY()+15>(int)p2.getY()){
-                find2=true;
-                m=i;
-            }
-        }
-        if (find1 && find2){
-            g.drawLine((int)points.get(k).getX(), (int)points.get(k).getY()+15, (int)points.get(m).getX(), (int)points.get(m).getY()+15);
-            lines.add(new Line(new Point((int)points.get(k).getX(),(int)points.get(k).getY()+15),new Point((int)points.get(m).getX(),(int)points.get(m).getY()+15)));
-        }
-        //g.drawLine((int)p1.getX(), (int)p1.getY(), (int)p2.getX(), (int)p2.getY());*/
-    }
+    }*/
    
    public int Color(int i, int t){
        HashSet<Integer> ws = new HashSet();

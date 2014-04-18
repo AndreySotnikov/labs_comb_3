@@ -71,7 +71,8 @@ public class genetic {
 
     }
 
-    private final ArrayList<Circle> points;
+    //private final ArrayList<Circle> points;
+    private final Circle[] points;
     private final int[][] matr;
     private static final Color[] color = {Color.green, Color.red, Color.blue, Color.yellow, Color.magenta, Color.orange, Color.pink, Color.cyan};
     private static int generations = 33;
@@ -85,8 +86,8 @@ public class genetic {
     private final Graphics g;
     private Solve BestSolve;
 
-    genetic(ArrayList<Circle> points, int[][] matr, int gen, int popul, double ci, double mc, double mg, Graphics g) {
-        this.points = points;
+    /*genetic(ArrayList<Circle> points, int[][] matr, int gen, int popul, double ci, double mc, double mg, Graphics g) {
+        //this.points = points;
         this.matr = matr;
         generations = gen;
         populationsize = popul;
@@ -96,30 +97,92 @@ public class genetic {
         mutationgen = mg;
         chromosomesize = points.size();
         this.g = g;
+    }*/
+    
+    genetic(int size,Circle[] points, int[][] matr, int gen, int popul, double ci, double mc, double mg, Graphics g) {
+        this.points = points;
+        this.matr = matr;
+        generations = gen;
+        populationsize = popul;
+        startsize = populationsize;
+        crossingindex = ci;
+        mutationchomosome = mc;
+        mutationgen = mg;
+        chromosomesize = size;
+        this.g = g;
     }
 
-    public boolean genetic() {
-        int size = points.size();
+    public int genetic() {
         ArrayList<Solve> population = new ArrayList();
-        myInit(population, size, BestSolve);
+        myInit(population);
         for (int i = 0; i < generations; i++) {
-            crossing(population, size);
-            mutation(population, size);
-            selection(population, size, BestSolve);
+            crossing(population);
+            mutation(population);
+            selection(population);
         }
         for (int i = 0; i < BestSolve.Colors.size(); i++) {
-            points.get(i).setColor(g, color[BestSolve.Colors.get(i)]);
+            if (points[i]!=null)
+                points[i].setColor(g, color[BestSolve.Colors.get(i)]);
         }
-        return BestSolve.Value <= points.size();
+        g.setColor(Color.black);
+        /*for (int i = 0; i < BestSolve.Colors.size(); i++) {
+            points.get(i).setColor(g, color[BestSolve.Colors.get(i)]);
+        }*/
+        return BestSolve.Value;
     }
-
-    public void selection(ArrayList<Solve> population, int size, Solve BestSolve) {
-        ArrayList<Double> chances = new ArrayList();
+    
+    public void myInit(ArrayList<Solve> population) {
+        for (int i = 0; i < populationsize; i++) {
+            population.add(randomSolve(chromosomesize));
+        }
+        setBestSolve(population.get(0));
+    }
+    
+    public void crossing(ArrayList<Solve> population) {
+        ArrayList<Integer> tmp = new ArrayList();
+        Random rand = new Random();
+        int ind1, ind2;
+        for (int i = 0; i < populationsize; i++) {
+            tmp.add(i);
+        }
+        int k = populationsize;
+        while (k >= 2) {
+            ind1 = getNum(tmp, k);
+            k--;
+            ind2 = getNum(tmp, k);
+            k--;
+            Solve c = new Solve();
+            if (rand.nextDouble() < crossingindex) {
+                c.newSolve(population.get(ind1), population.get(ind2));
+                population.add(c);
+                populationsize++;
+            }
+        }
+    }    
+    
+    public void mutation(ArrayList<Solve> population) {
+        Random rand = new Random();
         Solve slv;
+        ArrayList<Integer> clr;
+        for (int i = 0; i < populationsize; i++) {
+            slv = population.get(i);
+            clr = slv.Colors;
+            if (rand.nextDouble() < mutationchomosome) {
+                for (int j = 0; j < clr.size(); j++) {
+                    if (rand.nextDouble() < mutationgen) {
+                        clr.set(j, rand.nextInt(maxcolor));
+                    }
+                }
+            }
+        }
+    }    
+
+    public void selection(ArrayList<Solve> population) {
+        ArrayList<Double> chances = new ArrayList();
         Random rand = new Random();
         int val, imin = 0, sumchance = 0;
         int min = Integer.MAX_VALUE;
-        int max = population.get(0).Value;
+        int max = BestSolve.Value;
         for (int i = 0; i < populationsize; i++) {
             population.get(i).ValueSolve();
             val = population.get(i).Value;
@@ -144,60 +207,14 @@ public class genetic {
         }
     }
 
-    public void mutation(ArrayList<Solve> population, int size) {
-        Random rand = new Random();
-        Solve slv;
-        ArrayList<Integer> clr;
-        for (int i = 0; i < populationsize; i++) {
-            slv = population.get(i);
-            clr = slv.Colors;
-            if (rand.nextDouble() < mutationchomosome) {
-                for (int j = 0; j < clr.size(); j++) {
-                    if (rand.nextDouble() < mutationgen) {
-                        clr.set(j, rand.nextInt(maxcolor));
-                    }
-                }
-            }
-        }
-    }
-
-    public void crossing(ArrayList<Solve> population, int size) {
-        ArrayList<Integer> tmp = new ArrayList();
-        Random rand = new Random();
-        int ind1, ind2;
-        for (int i = 0; i < populationsize; i++) {
-            tmp.add(i);
-        }
-        int k = populationsize;
-        while (k >= 2) {
-            ind1 = getNum(tmp, k);
-            k--;
-            ind2 = getNum(tmp, k);
-            k--;
-            Solve c = new Solve();
-            if (rand.nextDouble() > crossingindex) {
-                c.newSolve(population.get(ind1), population.get(ind2));
-                population.add(c);
-                populationsize++;
-            }
-        }
-    }
-
-    public void myInit(ArrayList<Solve> population, int size, Solve BestSolve) {
-        for (int i = 0; i < populationsize; i++) {
-            population.add(randomSolve(size));
-        }
-        setBestSolve(population.get(0));
-    }
-
-    public void setBestSolve(Solve c) {
+    private void setBestSolve(Solve c) {
         BestSolve = c;
     }
 
-    public Solve randomSolve(int n) {
+    private Solve randomSolve(int n) {
         Solve slv = new Solve();
         Random rand = new Random();
-        for (int i = 0; i < points.size(); i++) {
+        for (int i = 0; i < chromosomesize; i++) {
             slv.Colors.add(rand.nextInt(maxcolor));
         }
         slv.ValueSolve();
