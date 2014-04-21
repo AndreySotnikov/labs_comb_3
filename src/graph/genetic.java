@@ -7,6 +7,12 @@ package graph;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
@@ -85,6 +91,7 @@ public class genetic {
     public static int chromosomesize;
     private final Graphics g;
     private Solve BestSolve;
+    BufferedWriter bufferedWriter;
 
     /*genetic(ArrayList<Circle> points, int[][] matr, int gen, int popul, double ci, double mc, double mg, Graphics g) {
         //this.points = points;
@@ -112,23 +119,32 @@ public class genetic {
         this.g = g;
     }
 
-    public int genetic() {
+    public int genetic() throws FileNotFoundException, UnsupportedEncodingException, IOException {
+        bufferedWriter = new BufferedWriter(
+            new OutputStreamWriter(new FileOutputStream("log.txt"), "UTF-8"));
         ArrayList<Solve> population = new ArrayList();
         myInit(population);
         for (int i = 0; i < generations; i++) {
             crossing(population);
             mutation(population);
             selection(population);
+            writeLog(population,i);
         }
+        bufferedWriter.close();
         for (int i = 0; i < BestSolve.Colors.size(); i++) {
             if (points[i]!=null)
                 points[i].setColor(g, color[BestSolve.Colors.get(i)]);
         }
         g.setColor(Color.black);
-        /*for (int i = 0; i < BestSolve.Colors.size(); i++) {
-            points.get(i).setColor(g, color[BestSolve.Colors.get(i)]);
-        }*/
         return BestSolve.Value;
+    }
+    
+    public void writeLog(ArrayList<Solve> population,int i) throws IOException{
+        bufferedWriter.write("Поколение" + i + "\n");
+        for (int j = 0; j <populationsize; j++)
+            bufferedWriter.write(population.get(j).Value + " ");
+        bufferedWriter.write("BEST- " + BestSolve.Value);
+        bufferedWriter.write("\n");
     }
     
     public void myInit(ArrayList<Solve> population) {
@@ -208,7 +224,20 @@ public class genetic {
     }
 
     private void setBestSolve(Solve c) {
-        BestSolve = c;
+        if (BestSolve==null){
+            BestSolve = new Solve();
+            for (int i = 0; i < c.Colors.size();i++)
+                BestSolve.Colors.add(c.Colors.get(i));
+            BestSolve.Value = c.Value;
+        }
+        else{
+            for (int i = 0; i < c.Colors.size();i++)
+                BestSolve.Colors.set(i,c.Colors.get(i));
+            BestSolve.Value = c.Value;            
+        }
+            
+            
+       // BestSolve = c;
     }
 
     private Solve randomSolve(int n) {
