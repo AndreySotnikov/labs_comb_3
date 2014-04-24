@@ -23,91 +23,33 @@ import java.util.Random;
  */
 public class genetic {
 
-    class Solve {
-
-        ArrayList<Integer> Colors;
-        int Value;
-        
-        Solve() {
-            this.Colors = new ArrayList();
-            this.Value = 0;
-        }
-
-        public void newSolve(Solve a, Solve b) {
-            Random rand = new Random();
-            int j = rand.nextInt(chromosomesize);
-            for (int i = 0; i < j; i++) {
-                this.Colors.add(a.Colors.get(i));
-            }
-            for (int i = j; i < chromosomesize; i++) {
-                this.Colors.add(b.Colors.get(i));
-            }
-        }
-
-        public boolean checkSolve() {
-            ArrayList<Integer> ws = new ArrayList();
-            for (int i = 0; i < chromosomesize; i++) {
-                for (int j = 0; j < chromosomesize; j++) {
-                    if (j != i && matr[i][j] == 1) {
-                        ws.add(j);
-                    }
-                }
-                for (int k = 0; k < ws.size(); k++) {
-                    if (i != ws.get(k) && Colors.get(i) == Colors.get(ws.get(k))) {
-                        return false;
-                    }
-                }
-                ws.clear();
-            }
-            return true;
-        }
-
-        public void ValueSolve() {
-            if (checkSolve()) {
-                ArrayList<Integer> Colors = this.Colors;
-                HashSet<Integer> tmp = new HashSet();
-                for (int i = 0; i < Colors.size(); i++) {
-                    tmp.add(Colors.get(i));
-                }
-                this.Value = tmp.size();
-            } else {
-                this.Value = chromosomesize + 1;
-            }
-        }
-
-    }
-
     //private final ArrayList<Circle> points;
-    private final Circle[] points;
     private final int[][] matr;
     private static final Color[] color = {Color.green, Color.red, Color.blue, Color.yellow, Color.magenta, Color.orange, Color.pink, Color.cyan};
-    private static int generations = 33;
-    private static int populationsize = 9999;
+    private static int generations;
+    private static int populationsize;
     private static int startsize;
-    private static double crossingindex = 0.5;
-    private static double mutationchomosome = 0.5;
-    private static double mutationgen = 0.5;
+    private static double crossingindex;
+    private static double mutationchomosome;
+    private static double mutationgen;
     private static final int maxcolor = color.length;
     public static int chromosomesize;
-    private final Graphics g;
     private Solve BestSolve;
-    BufferedWriter bufferedWriter;
+    private BufferedWriter bufferedWriter;
 
     /*genetic(ArrayList<Circle> points, int[][] matr, int gen, int popul, double ci, double mc, double mg, Graphics g) {
-        //this.points = points;
-        this.matr = matr;
-        generations = gen;
-        populationsize = popul;
-        startsize = populationsize;
-        crossingindex = ci;
-        mutationchomosome = mc;
-        mutationgen = mg;
-        chromosomesize = points.size();
-        this.g = g;
-    }*/
-    
-    genetic(int size,Circle[] points, int[][] matr, int gen, int popul, double ci, double mc, double mg, Graphics g) {
-        this.points = points;
+     //this.points = points;
+     this.matr = matr;
+     generations = gen;
+     populationsize = popul;
+     startsize = populationsize;
+     crossingindex = ci;
+     mutationchomosome = mc;
+     mutationgen = mg;
+     chromosomesize = points.size();
+     this.g = g;
+     }*/
+    genetic(int size, int[][] matr, int gen, int popul, double ci, double mc, double mg) {
         this.matr = matr;
         generations = gen;
         populationsize = popul;
@@ -116,44 +58,65 @@ public class genetic {
         mutationchomosome = mc;
         mutationgen = mg;
         chromosomesize = size;
-        this.g = g;
     }
 
-    public int genetic() throws FileNotFoundException, UnsupportedEncodingException, IOException {
+    public Solve genetic() throws FileNotFoundException, UnsupportedEncodingException, IOException {
         bufferedWriter = new BufferedWriter(
-            new OutputStreamWriter(new FileOutputStream("log.txt"), "UTF-8"));
+                new OutputStreamWriter(new FileOutputStream("log.txt"), "UTF-8"));
         ArrayList<Solve> population = new ArrayList();
         myInit(population);
+        writeLog(population, 0, "Начальная популяция");
+        //фитнес функция
         for (int i = 0; i < generations; i++) {
             crossing(population);
+            writeLog(population, i + 1, "Скрещивание");
             mutation(population);
-            selection(population);
-            writeLog(population,i);
+            writeLog(population, i + 1, "Мутация");
+            population = selection(population);
+            writeLog(population, i + 1, "Селекция");
         }
         bufferedWriter.close();
-        for (int i = 0; i < BestSolve.Colors.size(); i++) {
-            if (points[i]!=null)
+        //BestSolve.paint(points,g);
+        /*for (int i = 0; i < BestSolve.Colors.size(); i++) {
+            if (points[i] != null) {
                 points[i].setColor(g, color[BestSolve.Colors.get(i)]);
+            }
         }
-        g.setColor(Color.black);
-        return BestSolve.Value;
+        g.setColor(Color.black);*/
+        return BestSolve;
     }
-    
-    public void writeLog(ArrayList<Solve> population,int i) throws IOException{
+
+    public void writeLog(ArrayList<Solve> population, int i, String str) throws IOException {
         bufferedWriter.write("Поколение" + i + "\n");
-        for (int j = 0; j <populationsize; j++)
-            bufferedWriter.write(population.get(j).Value + " ");
-        bufferedWriter.write("BEST- " + BestSolve.Value);
-        bufferedWriter.write("\n");
+        bufferedWriter.write(str + "\n");
+        for (int j = 0; j < populationsize; j++) {
+            for (int k = 0; k < population.get(j).Colors.size(); k++) {
+                bufferedWriter.write(population.get(j).Colors.get(k) + " ");
+            }
+            bufferedWriter.write("\t");
+            bufferedWriter.write("" + population.get(j).Value);
+            bufferedWriter.write("\n");
+        }
     }
-    
+
     public void myInit(ArrayList<Solve> population) {
         for (int i = 0; i < populationsize; i++) {
             population.add(randomSolve(chromosomesize));
         }
-        setBestSolve(population.get(0));
+
+        int val, imin = 0;
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < populationsize; i++) {
+            //population.get(i).ValueSolve();
+            val = population.get(i).Value;
+            if (val < min) {
+                imin = i;
+                min = val;
+            }
+        }
+        setBestSolve(population.get(imin));
     }
-    
+
     public void crossing(ArrayList<Solve> population) {
         ArrayList<Integer> tmp = new ArrayList();
         Random rand = new Random();
@@ -167,77 +130,120 @@ public class genetic {
             k--;
             ind2 = getNum(tmp, k);
             k--;
-            Solve c = new Solve();
             if (rand.nextDouble() < crossingindex) {
-                c.newSolve(population.get(ind1), population.get(ind2));
-                population.add(c);
-                populationsize++;
+                //c.newSolve(population.get(ind1), population.get(ind2));
+                newSolve(population, ind1, ind2);
+                //population.add(c);
+                //populationsize++;
             }
         }
-    }    
-    
+    }
+
     public void mutation(ArrayList<Solve> population) {
         Random rand = new Random();
         Solve slv;
         ArrayList<Integer> clr;
         for (int i = 0; i < populationsize; i++) {
-            slv = population.get(i);
-            clr = slv.Colors;
             if (rand.nextDouble() < mutationchomosome) {
+                clr = population.get(i).Colors;
                 for (int j = 0; j < clr.size(); j++) {
                     if (rand.nextDouble() < mutationgen) {
+                        //рандом до предыдущего цвета
+                        //clr.set(j, rand.nextInt(clr.get(j))+1);
                         clr.set(j, rand.nextInt(maxcolor));
                     }
                 }
+                population.get(i).ValueSolve(matr);
             }
         }
-    }    
+    }
 
-    public void selection(ArrayList<Solve> population) {
+    public ArrayList<Solve> selection(ArrayList<Solve> population) {
         ArrayList<Double> chances = new ArrayList();
+        ArrayList<Solve> elitePopulation = new ArrayList();
         Random rand = new Random();
         int val, imin = 0, sumchance = 0;
         int min = Integer.MAX_VALUE;
         int max = BestSolve.Value;
         for (int i = 0; i < populationsize; i++) {
-            population.get(i).ValueSolve();
+            //population.get(i).ValueSolve();
             val = population.get(i).Value;
             if (val < min) {
                 imin = i;
                 min = val;
             }
-            sumchance += val;
+            sumchance += + chromosomesize+2 -val; 
         }
         if (population.get(imin).Value < max) {
             this.setBestSolve(population.get(imin));
         }
         for (int i = 0; i < populationsize; i++) {
-            chances.add((double) population.get(i).Value / sumchance);
+            chances.add((double) (chromosomesize+2 - population.get(i).Value) / sumchance);
         }
+        for (int i = 1; i < chances.size(); i++) {
+            chances.set(i, chances.get(i - 1) + chances.get(i));
+        }
+        //
+
         for (int i = 0; i < populationsize; i++) {
-            if (populationsize > startsize && rand.nextDouble() > chances.get(i)) {
-                population.remove(i);
-                chances.remove(i);
-                populationsize--;
+            double p = rand.nextDouble();
+            boolean ok = false;
+            int index = 0;
+            for (int j = 0; j < chances.size() && !ok; j++) {
+                if (p < chances.get(j)) {
+                    index = j;
+                    ok = true;
+                }
             }
+            elitePopulation.add(population.get(index));
+
         }
+        return elitePopulation;
+        /*for (int i = 0; i < populationsize; i++) {
+         if (populationsize > startsize && rand.nextDouble() > chances.get(i)) {
+         population.remove(i);
+         chances.remove(i);
+         populationsize--;
+         }
+         }*/
+    }
+
+    public void newSolve(ArrayList<Solve> population, int ind1, int ind2) {
+        Random rand = new Random();
+        Solve a = population.get(ind1);
+        Solve b = population.get(ind2);
+        Solve c = new Solve();
+        Solve d = new Solve();
+        int j = rand.nextInt(chromosomesize);
+        for (int i = 0; i < j; i++) {
+            c.Colors.add(a.Colors.get(i));
+            d.Colors.add(b.Colors.get(i));
+        }
+        for (int i = j; i < chromosomesize; i++) {
+            c.Colors.add(b.Colors.get(i));
+            d.Colors.add(a.Colors.get(i));
+        }
+        c.ValueSolve(matr);
+        d.ValueSolve(matr);
+        population.set(ind1, c);
+        population.set(ind2, d);
     }
 
     private void setBestSolve(Solve c) {
-        if (BestSolve==null){
+        if (BestSolve == null) {
             BestSolve = new Solve();
-            for (int i = 0; i < c.Colors.size();i++)
+            for (int i = 0; i < c.Colors.size(); i++) {
                 BestSolve.Colors.add(c.Colors.get(i));
+            }
+            BestSolve.Value = c.Value;
+        } else {
+            for (int i = 0; i < c.Colors.size(); i++) {
+                BestSolve.Colors.set(i, c.Colors.get(i));
+            }
             BestSolve.Value = c.Value;
         }
-        else{
-            for (int i = 0; i < c.Colors.size();i++)
-                BestSolve.Colors.set(i,c.Colors.get(i));
-            BestSolve.Value = c.Value;            
-        }
-            
-            
-       // BestSolve = c;
+
+        // BestSolve = c;
     }
 
     private Solve randomSolve(int n) {
@@ -246,7 +252,7 @@ public class genetic {
         for (int i = 0; i < chromosomesize; i++) {
             slv.Colors.add(rand.nextInt(maxcolor));
         }
-        slv.ValueSolve();
+        slv.ValueSolve(matr);
         return slv;
     }
 

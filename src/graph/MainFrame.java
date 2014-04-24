@@ -36,7 +36,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         initComponents();
         jSpinner1.setModel(new SpinnerNumberModel(50, 1, 10000, 1));
-        jSpinner2.setModel(new SpinnerNumberModel(1000, 1, 10000, 1));
+        jSpinner2.setModel(new SpinnerNumberModel(50, 1, 10000, 1));
         jSpinner3.setModel(new SpinnerNumberModel(0.7, 0.1, 1, 0.1));
         jSpinner4.setModel(new SpinnerNumberModel(0.7, 0.1, 1, 0.1));
         jSpinner5.setModel(new SpinnerNumberModel(0.7, 0.1, 1, 0.1));
@@ -431,14 +431,16 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //gr.Exact();            // TODO add your handling code here:
         long start = System.currentTimeMillis();
-        exact ex = new exact(gr.getCount(),gr.getM(),gr.getPnts(),g1);
-        int val= ex.ExactAlg();
+        exact ex = new exact(gr.getCount(),gr.getM());
+        //exact ex = new exact(gr.getCount(),gr.getM(),gr.getPnts(),g1);
+        //int val= ex.ExactAlg();
+        ex.ExactAlg();
         long finish = System.currentTimeMillis();
         jTextField4.setText(""+(finish-start));
-        if (val==-1)
+        /*if (val==-1)
             JOptionPane.showMessageDialog(null, "FAIL");
         else
-            jTextField2.setText(Integer.toString(val));
+            jTextField2.setText(Integer.toString(val));*/
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -448,13 +450,15 @@ public class MainFrame extends javax.swing.JFrame {
             double ci = (double) jSpinner3.getValue();
             double mc = (double) jSpinner4.getValue();
             double mg = (double) jSpinner5.getValue();
+            Solve res;
             long start = System.currentTimeMillis();
-            genetic gen = new genetic(gr.getCount(), gr.getPnts(), gr.getM(), generat, popul, ci, mc, mg, g);
-            int chrom = gen.genetic();
+            genetic gen = new genetic(gr.getCount(), gr.getM(), generat, popul, ci, mc, mg);
+            res = gen.genetic();
+            res.paint(gr.getPnts(), g);
             long finish = System.currentTimeMillis();
             jTextField3.setText(""+(finish-start));
-            jTextField1.setText(Integer.toString(chrom));
-            if (chrom > gr.getCount()) // TODO add your handling code here:
+            jTextField1.setText(Integer.toString(res.Value));
+            if (res.Value > gr.getCount()) // TODO add your handling code here:
             {
                 JOptionPane.showMessageDialog(null, "FAIL");
             }
