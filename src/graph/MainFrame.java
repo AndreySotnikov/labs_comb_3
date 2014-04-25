@@ -434,9 +434,13 @@ public class MainFrame extends javax.swing.JFrame {
         exact ex = new exact(gr.getCount(),gr.getM());
         //exact ex = new exact(gr.getCount(),gr.getM(),gr.getPnts(),g1);
         //int val= ex.ExactAlg();
-        ex.ExactAlg();
+        Solve slv;
+        slv = ex.ExactAlg();
+        slv.ValueSolve(gr.getM());
+        slv.paint(gr.getPnts(), g1);
         long finish = System.currentTimeMillis();
         jTextField4.setText(""+(finish-start));
+        jTextField2.setText(Integer.toString(slv.Value));
         /*if (val==-1)
             JOptionPane.showMessageDialog(null, "FAIL");
         else

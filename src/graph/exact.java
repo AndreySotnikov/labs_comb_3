@@ -16,7 +16,166 @@ import java.util.HashSet;
  * @author andrey
  */
 public class exact {
+    int[][] matr;
+    int size;
+    int[] ss;
+    //ArrayList<Integer> ss;
+    ArrayList<HashSet<Integer>> sets;
+    //ArrayList<ArrayList<Integer>> sets;
+    //ArrayList<HashSet<Integer>> sets;
+    ArrayList<HashSet<Integer>>  a;
+    //HashSet<Integer> ss;
+    ArrayList<Integer> bestSolve = new ArrayList();
+    ArrayList<Integer> Solve = new ArrayList();
+    HashSet<Integer> nodes;
+    Solve vec;
+    
+    exact(int N, int[][] m){
+        this.sets = new ArrayList();
+        nodes = new HashSet();
+        for (int i = 0;i < N; i++)
+            nodes.add(i);
+        matr = m;
+        size = N;
+        //ss = new HashSet();
+        ss = new int[size];
+        //ss = new ArrayList();
+        
+    }
+    
+    public void formGraph() {
+        a = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (i >= a.size()) {
+                    a.add(new HashSet<Integer>());
+                }
+                if (i != j && matr[i][j] == 1) {
 
+                    a.get(i).add(j);
+                }
+            }
+        }
+    }
+    
+    public void Find(int k, HashSet<Integer> qp, HashSet<Integer> qm){
+        HashSet<Integer> gg = new HashSet();
+        int delt;
+        if (qp.isEmpty() && qm.isEmpty()){
+            HashSet<Integer> tmp = new HashSet();
+            for (int i = 0; i < k;i++)
+                tmp.add(ss[i]);
+            //print
+            sets.add(tmp);
+            //ss = new HashSet();
+            //ss = new int[size];
+            /*for (int i = 0; i < k;i++)
+                System.out.print(ss[i] + " ");
+            System.out.println();*/
+            return;
+        }
+        int i=0;
+        if (!qm.isEmpty()){
+            delt = size;
+            for (int j = 0;j < size; j++){
+                if (qm.contains(j)){
+                    HashSet<Integer> tmp = new HashSet();
+                    tmp.addAll(a.get(j));
+                    tmp.retainAll(qp);
+                    if (tmp.size()<delt){
+                        i = j;
+                        delt = tmp.size();
+                    }
+                    HashSet<Integer> tmp2 = new HashSet();
+                    tmp2.addAll(a.get(i));
+                    gg.retainAll(qp);
+                }
+                    
+            }
+        }else
+            gg.addAll(qp);
+        i=0;
+        while (i<size){
+            if (gg.contains(i)){
+                ss[k] = i;
+                HashSet<Integer> s1 = new HashSet();
+                HashSet<Integer> s2 = new HashSet();
+                s1.addAll(qp);
+                s2.addAll(qm);
+                s1.removeAll(a.get(i));
+                s1.remove(i);
+                s2.removeAll(a.get(i));
+                s2.remove(i);
+                Find(k+1,s1,s2);
+                qp.remove(i);
+                qm.add(i);
+                gg = new HashSet();
+                gg.addAll(qp);
+                gg.retainAll(a.get(i));
+            }
+            i++;
+        }
+    }
+    
+    public void backtrack(int i){
+        if (i >= sets.size()+1)
+            return;
+        if (Check(Solve)){
+            if (Solve.size()<bestSolve.size() || bestSolve.isEmpty()){
+                bestSolve = new ArrayList();
+                for (int s : Solve)
+                    bestSolve.add(s);
+            }
+        }else{
+            for (int j = 1; j < sets.size();j++){
+                Solve.add(i);
+                backtrack(i+j);
+                Solve.remove((Object)i);
+            }
+        }    
+    }
+    
+    public boolean Check(ArrayList<Integer> slv){
+        HashSet<Integer> tmp = new HashSet();
+        for (int i : slv){
+            tmp.addAll(sets.get(i));
+        }
+        return nodes.equals(tmp);
+    }
+    
+    public void formSolve(){
+        int col = 0;
+        vec = new Solve();
+        for (int i = 0; i < size; i++)
+            vec.Colors.add(0);
+        for (int a : bestSolve){
+            HashSet<Integer> set = sets.get(a);
+            for (int i = 0; i < size; i++)
+                if (set.contains(i))
+                    vec.Colors.set(i, col);
+            col++;
+        }
+    }
+    
+    public Solve ExactAlg(){       
+        formGraph();
+        HashSet<Integer> qp = new HashSet();
+        HashSet<Integer> qm = new HashSet();
+        for (int i = 0; i <size;i++)
+            qp.add(i);
+        Find(0,qp,qm);
+        for (HashSet<Integer> mas : sets){
+            for (int el : mas){
+                System.out.print(el + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("----------------------");
+        for (int i = 0; i < sets.size();i++)
+            backtrack(i);
+        formSolve();
+        return vec;
+    }
     /*int[][] matr;
     int N;
     int maxcolor = 8;
@@ -101,7 +260,7 @@ public class exact {
         return value;
     }*/
     
-    public static final int maxN = 10;
+    /*public static final int maxN = 10;
     int[][] bl;
     int[][] a;
     int[][] a1;
@@ -235,5 +394,5 @@ public class exact {
         Blocs();
         Find(1,1);
         Print();
-    }
+    }*/
 }
