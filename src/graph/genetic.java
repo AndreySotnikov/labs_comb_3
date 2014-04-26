@@ -208,7 +208,7 @@ public class genetic {
          }*/
     }
 
-    public void newSolve(ArrayList<Solve> population, int ind1, int ind2) {
+    private void newSolve(ArrayList<Solve> population, int ind1, int ind2) {
         Random rand = new Random();
         Solve a = population.get(ind1);
         Solve b = population.get(ind2);
