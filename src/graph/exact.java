@@ -19,12 +19,8 @@ public class exact {
     int[][] matr;
     int size;
     int[] ss;
-    //ArrayList<Integer> ss;
     ArrayList<HashSet<Integer>> sets;
-    //ArrayList<ArrayList<Integer>> sets;
-    //ArrayList<HashSet<Integer>> sets;
     ArrayList<HashSet<Integer>>  a;
-    //HashSet<Integer> ss;
     ArrayList<Integer> bestSolve = new ArrayList();
     ArrayList<Integer> Solve = new ArrayList();
     HashSet<Integer> nodes;
@@ -37,19 +33,16 @@ public class exact {
             nodes.add(i);
         matr = m;
         size = N;
-        //ss = new HashSet();
         ss = new int[size];
-        //ss = new ArrayList();
         
     }
     
     public void formGraph() {
         a = new ArrayList<>();
         for (int i = 0; i < size; i++) {
+            a.add(new HashSet<Integer>());
             for (int j = 0; j < size; j++) {
-                if (i >= a.size()) {
-                    a.add(new HashSet<Integer>());
-                }
+             
                 if (i != j && matr[i][j] == 1) {
 
                     a.get(i).add(j);
@@ -65,13 +58,7 @@ public class exact {
             HashSet<Integer> tmp = new HashSet();
             for (int i = 0; i < k;i++)
                 tmp.add(ss[i]);
-            //print
             sets.add(tmp);
-            //ss = new HashSet();
-            //ss = new int[size];
-            /*for (int i = 0; i < k;i++)
-                System.out.print(ss[i] + " ");
-            System.out.println();*/
             return;
         }
         int i=0;
@@ -117,7 +104,36 @@ public class exact {
         }
     }
     
-    public void backtrack(int i){
+    public void backtrack(int i) {
+        if (i>=sets.size())
+            return;
+        if (Solve.size() < bestSolve.size()) {
+            Solve.add(i);
+            if (!Check(Solve)) {
+                backtrack(i + 1);
+            } else {
+                if (Solve.size() <= bestSolve.size()) {
+                    bestSolve = new ArrayList();
+                    for (int s : Solve) {
+                        bestSolve.add(s);
+                    }
+                }
+            }
+            Solve.remove((Object) i);
+        }
+        if (!Check(Solve)) {
+            backtrack(i + 1);
+        } else {
+            if (Solve.size() <= bestSolve.size()) {
+                bestSolve = new ArrayList();
+                for (int s : Solve) {
+                    bestSolve.add(s);
+                }
+            }
+        }
+    }
+    
+    /*public void backtrack(int i){
         if (i >= sets.size()+1)
             return;
         if (Check(Solve)){
@@ -133,7 +149,7 @@ public class exact {
                 Solve.remove((Object)i);
             }
         }    
-    }
+    }*/
     
     public boolean Check(ArrayList<Integer> slv){
         HashSet<Integer> tmp = new HashSet();
@@ -171,8 +187,11 @@ public class exact {
             System.out.println();
         }
         System.out.println("----------------------");
-        for (int i = 0; i < sets.size();i++)
-            backtrack(i);
+        //for (int i = 0; i < sets.size();i++)
+          //  backtrack(i);
+        for (int i = 0;i<sets.size();i++)
+            bestSolve.add(i);
+        backtrack(0);
         formSolve();
         return vec;
     }

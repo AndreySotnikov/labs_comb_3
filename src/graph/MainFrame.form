@@ -93,7 +93,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jTextField1" max="32767" attributes="0"/>
+                                  <Component id="chromgen" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -103,9 +103,9 @@
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="jSpinner5" pref="60" max="32767" attributes="0"/>
-                                      <Component id="jSpinner4" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jSpinner3" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="spinmutgen" pref="60" max="32767" attributes="0"/>
+                                      <Component id="spinmutchrom" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="spincross" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -118,15 +118,15 @@
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jSpinner2" pref="80" max="32767" attributes="0"/>
-                                      <Component id="jSpinner1" max="32767" attributes="0"/>
+                                      <Component id="spinpopul" pref="80" max="32767" attributes="0"/>
+                                      <Component id="spingen" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jTextField3" min="-2" pref="78" max="-2" attributes="0"/>
+                                  <Component id="timegen" min="-2" pref="78" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -147,40 +147,40 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jSpinner3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spincross" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jSpinner2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spinpopul" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jSpinner4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="spinmutchrom" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                              <Component id="jSpinner5" min="-2" max="-2" attributes="0"/>
+                              <Component id="spinmutgen" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jSpinner1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="spingen" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
                   <EmptySpace pref="24" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chromgen" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="timegen" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -205,7 +205,7 @@
             <Property name="text" type="java.lang.String" value="&#x41a;&#x43e;&#x43b;-&#x432;&#x43e; &#x43f;&#x43e;&#x43a;&#x43e;&#x43b;&#x435;&#x43d;&#x438;&#x439;"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="jSpinner1">
+        <Component class="javax.swing.JSpinner" name="spingen">
           <Properties>
             <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="50" type="code"/>
@@ -217,7 +217,7 @@
             <Property name="text" type="java.lang.String" value="&#x420;&#x430;&#x437;&#x43c;&#x435;&#x440; &#x43f;&#x43e;&#x43f;&#x443;&#x43b;&#x44f;&#x446;&#x438;&#x438;"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="jSpinner2">
+        <Component class="javax.swing.JSpinner" name="spinpopul">
           <Properties>
             <Property name="value" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="1000" type="code"/>
@@ -229,23 +229,23 @@
             <Property name="text" type="java.lang.String" value="&#x412;&#x435;&#x440;-&#x442;&#x44c; &#x441;&#x43a;&#x440;&#x435;&#x449;&#x438;&#x432;&#x430;&#x43d;&#x438;&#x44f;"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="jSpinner3">
+        <Component class="javax.swing.JSpinner" name="spincross">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#x412;&#x435;&#x440;-&#x442;&#x44c; &#x43c;&#x443;&#x442;&#x430;&#x446;&#x438;&#x438; &#x445;&#x440;&#x43e;&#x43c;."/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="jSpinner4">
+        <Component class="javax.swing.JSpinner" name="spinmutchrom">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#x412;&#x435;&#x440;-&#x442;&#x44c; &#x43c;&#x443;&#x442;&#x430;&#x446;&#x438;&#x438; &#x433;&#x435;&#x43d;&#x430;"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="jSpinner5">
+        <Component class="javax.swing.JSpinner" name="spinmutgen">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="chromgen">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
           </Properties>
@@ -260,7 +260,7 @@
             <Property name="text" type="java.lang.String" value="&#x412;&#x440;&#x435;&#x43c;&#x44f; &#x432;&#x44b;&#x43f;&#x43e;&#x43b;&#x43d;&#x435;&#x43d;&#x438;&#x44f;"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField3">
+        <Component class="javax.swing.JTextField" name="timegen">
         </Component>
       </SubComponents>
     </Container>
@@ -280,11 +280,11 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField2" min="-2" pref="78" max="-2" attributes="0"/>
+                          <Component id="chromexact" min="-2" pref="78" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField4" min="-2" pref="57" max="-2" attributes="0"/>
+                          <Component id="timeexact" min="-2" pref="57" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="12" pref="20" max="32767" attributes="0"/>
@@ -301,10 +301,10 @@
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="chromexact" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField4" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="timeexact" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -324,7 +324,7 @@
             <Property name="text" type="java.lang.String" value="&#x422;&#x43e;&#x447;&#x43d;&#x44b;&#x439; &#x430;&#x43b;&#x433;&#x43e;&#x440;&#x438;&#x442;&#x43c;"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
+        <Component class="javax.swing.JTextField" name="chromexact">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel9">
           <Properties>
@@ -336,7 +336,7 @@
             <Property name="text" type="java.lang.String" value="&#x412;&#x440;&#x435;&#x43c;&#x44f; &#x432;&#x44b;&#x43f;&#x43e;&#x43b;&#x43d;&#x435;&#x43d;&#x438;&#x44f;"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField4">
+        <Component class="javax.swing.JTextField" name="timeexact">
         </Component>
       </SubComponents>
     </Container>

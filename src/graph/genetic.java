@@ -172,7 +172,7 @@ public class genetic {
                 imin = i;
                 min = val;
             }
-            sumchance += + chromosomesize+2 -val; 
+            sumchance += chromosomesize+2 -val; 
         }
         if (population.get(imin).Value < max) {
             this.setBestSolve(population.get(imin));

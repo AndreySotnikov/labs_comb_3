@@ -35,11 +35,11 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
 
         initComponents();
-        jSpinner1.setModel(new SpinnerNumberModel(50, 1, 10000, 1));
-        jSpinner2.setModel(new SpinnerNumberModel(50, 1, 10000, 1));
-        jSpinner3.setModel(new SpinnerNumberModel(0.7, 0.1, 1, 0.1));
-        jSpinner4.setModel(new SpinnerNumberModel(0.7, 0.1, 1, 0.1));
-        jSpinner5.setModel(new SpinnerNumberModel(0.7, 0.1, 1, 0.1));
+        spingen.setModel(new SpinnerNumberModel(50, 1, 10000, 1));
+        spinpopul.setModel(new SpinnerNumberModel(50, 1, 10000, 1));
+        spincross.setModel(new SpinnerNumberModel(0.7, 0.1, 1, 0.1));
+        spinmutchrom.setModel(new SpinnerNumberModel(0.7, 0.1, 1, 0.1));
+        spinmutgen.setModel(new SpinnerNumberModel(0.7, 0.1, 1, 0.1));
         g = graph1.getGraphics();
         g1 = graph2.getGraphics();
         gr = new cgraph(g, g1, this.getBackground());
@@ -64,26 +64,26 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        spingen = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
-        jSpinner2 = new javax.swing.JSpinner();
+        spinpopul = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
-        jSpinner3 = new javax.swing.JSpinner();
+        spincross = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
-        jSpinner4 = new javax.swing.JSpinner();
+        spinmutchrom = new javax.swing.JSpinner();
         jLabel6 = new javax.swing.JLabel();
-        jSpinner5 = new javax.swing.JSpinner();
-        jTextField1 = new javax.swing.JTextField();
+        spinmutgen = new javax.swing.JSpinner();
+        chromgen = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        timegen = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        chromexact = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        timeexact = new javax.swing.JTextField();
         graph1 = new javax.swing.JPanel();
         graph2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -107,11 +107,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Кол-во поколений");
 
-        jSpinner1.setValue(50);
+        spingen.setValue(50);
 
         jLabel3.setText("Размер популяции");
 
-        jSpinner2.setValue(1000);
+        spinpopul.setValue(1000);
 
         jLabel4.setText("Вер-ть скрещивания");
 
@@ -119,7 +119,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel6.setText("Вер-ть мутации гена");
 
-        jTextField1.setEditable(false);
+        chromgen.setEditable(false);
 
         jLabel7.setText("Хроматическое число");
 
@@ -142,7 +142,7 @@ public class MainFrame extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField1))
+                                .addComponent(chromgen))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
@@ -150,9 +150,9 @@ public class MainFrame extends javax.swing.JFrame {
                                     .addComponent(jLabel6))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jSpinner5, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                                    .addComponent(jSpinner4, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jSpinner3, javax.swing.GroupLayout.Alignment.LEADING))))
+                                    .addComponent(spinmutgen, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                                    .addComponent(spinmutchrom, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(spincross, javax.swing.GroupLayout.Alignment.LEADING))))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -161,13 +161,13 @@ public class MainFrame extends javax.swing.JFrame {
                                     .addComponent(jLabel1))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSpinner2, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                                    .addComponent(jSpinner1)))
+                                    .addComponent(spinpopul, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                                    .addComponent(spingen)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(24, 24, 24)
                                 .addComponent(jLabel10)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(timegen, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(123, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -181,31 +181,31 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
-                        .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(spincross, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
-                        .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(spinpopul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jSpinner4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spinmutchrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(jSpinner5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(spinmutgen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(spingen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chromgen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(timegen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jButton1.setText("Старт");
@@ -235,11 +235,11 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(chromexact, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(timeexact, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(12, 20, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -251,10 +251,10 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chromexact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(timeexact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         graph1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -439,8 +439,8 @@ public class MainFrame extends javax.swing.JFrame {
         slv.ValueSolve(gr.getM());
         slv.paint(gr.getPnts(), g1);
         long finish = System.currentTimeMillis();
-        jTextField4.setText(""+(finish-start));
-        jTextField2.setText(Integer.toString(slv.Value));
+        timeexact.setText(""+(finish-start));
+        chromexact.setText(Integer.toString(slv.Value));
         /*if (val==-1)
             JOptionPane.showMessageDialog(null, "FAIL");
         else
@@ -449,19 +449,19 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            int generat = (int) jSpinner1.getValue();
-            int popul = (int) jSpinner2.getValue();
-            double ci = (double) jSpinner3.getValue();
-            double mc = (double) jSpinner4.getValue();
-            double mg = (double) jSpinner5.getValue();
+            int generat = (int) spingen.getValue();
+            int popul = (int) spinpopul.getValue();
+            double ci = (double) spincross.getValue();
+            double mc = (double) spinmutchrom.getValue();
+            double mg = (double) spinmutgen.getValue();
             Solve res;
             long start = System.currentTimeMillis();
             genetic gen = new genetic(gr.getCount(), gr.getM(), generat, popul, ci, mc, mg);
             res = gen.genetic();
             res.paint(gr.getPnts(), g);
             long finish = System.currentTimeMillis();
-            jTextField3.setText(""+(finish-start));
-            jTextField1.setText(Integer.toString(res.Value));
+            timegen.setText(""+(finish-start));
+            chromgen.setText(Integer.toString(res.Value));
             if (res.Value > gr.getCount()) // TODO add your handling code here:
             {
                 JOptionPane.showMessageDialog(null, "FAIL");
@@ -513,10 +513,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearActionPerformed
         g.clearRect(5, 5, graph1.getWidth(), graph1.getHeight());
         g1.clearRect(5, 5, graph2.getWidth(), graph2.getHeight());
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jTextField4.setText("");
+        chromgen.setText("");
+        chromexact.setText("");
+        timegen.setText("");
+        timeexact.setText("");
         gr = new cgraph(g, g1, this.getBackground());
     }//GEN-LAST:event_ClearActionPerformed
 
@@ -569,6 +569,8 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Clear;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JTextField chromexact;
+    private javax.swing.JTextField chromgen;
     private javax.swing.JPanel graph1;
     private javax.swing.JPanel graph2;
     private javax.swing.JButton jButton1;
@@ -591,14 +593,12 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JSpinner jSpinner3;
-    private javax.swing.JSpinner jSpinner4;
-    private javax.swing.JSpinner jSpinner5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JSpinner spincross;
+    private javax.swing.JSpinner spingen;
+    private javax.swing.JSpinner spinmutchrom;
+    private javax.swing.JSpinner spinmutgen;
+    private javax.swing.JSpinner spinpopul;
+    private javax.swing.JTextField timeexact;
+    private javax.swing.JTextField timegen;
     // End of variables declaration//GEN-END:variables
 }
